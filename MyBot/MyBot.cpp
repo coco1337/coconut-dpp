@@ -1,12 +1,16 @@
-#include <dpp/dpp.h>
-#include <dpp/fmt/format.h>
+#include "CommandManager.h"
 #include <iostream>
 
-int main(int argc, char**argv)
+int main(int argc, char** argv)
 {
 	dpp::cluster bot(argv[1]);
+	auto commandManager = new CommandManager();
+	if (!commandManager->Init()) {
+		std::cout << "Initalize error" << std::endl;
+		return 0;
+	}
 
-	bot.on_ready([&bot](const dpp::ready_t& event) {
+	bot.on_ready([&bot, &commandManager](const dpp::ready_t& event) {
 		bot.log(dpp::ll_info, "Logged in as " + bot.me.username);
 
 		dpp::slashcommand newCommand;
@@ -28,6 +32,11 @@ int main(int argc, char**argv)
 
 		bot.global_command_create(newCommand);
 		bot.global_command_create(newCommand2);
+
+		for (auto mi: commandManager->GetCommandMap()) {
+			mi.second.set_application_id(bot.me.id);
+			bot.global_command_create(mi.second);
+		}
 		});
 
 	bot.on_button_click([&bot](const dpp::button_click_t& event) {
@@ -42,7 +51,8 @@ int main(int argc, char**argv)
 	bot.on_message_create([&bot](const dpp::message_create_t& event) {
 		if (event.msg->content == "!ping") {
 			bot.message_create(dpp::message(event.msg->channel_id, "Pong!"));
-		} else if (event.msg->content == "!ping2") {
+		}
+		else if (event.msg->content == "!ping2") {
 			bot.message_create(
 				dpp::message(event.msg->channel_id, "What is 5+5?").add_component(
 					dpp::component().add_component(
