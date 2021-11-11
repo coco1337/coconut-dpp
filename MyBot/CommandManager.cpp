@@ -18,21 +18,30 @@ bool CommandManager::Init() {
 
 bool CommandManager::InitCommands() {
 	dpp::slashcommand commandBlep;
-	commandBlep.set_name(commands[CommandEnums::BLEP])
+	commandBlep.set_name(enumToCommand[CommandEnums::BLEP])
 		.set_description("Send a random");
 
 	dpp::slashcommand commandTest;
-	commandTest.set_name(commands[CommandEnums::TEST])
+	commandTest.set_name(enumToCommand[CommandEnums::TEST])
 		.set_description("just test 2");
 
-	commandMap.insert({ CommandEnums::BLEP, commandBlep });
-	commandMap.insert({ CommandEnums::TEST, commandTest });
+	commandMap.emplace(CommandEnums::BLEP, commandBlep);
+	commandMap.emplace(CommandEnums::TEST, commandTest);
 
 	// check command count
 	return true;
 }
 
 bool CommandManager::InitInteractions() {
+	interactionMap.emplace(CommandEnums::BLEP, [](dpp::interaction_create_t& evt) {
+		evt.reply(dpp::ir_channel_message_with_source, fmt::format("this is blep"));
+		});
+
+	interactionMap.emplace(CommandEnums::TEST, [](dpp::interaction_create_t& evt) {
+		evt.reply(dpp::ir_channel_message_with_source, fmt::format("this is test"));
+		});
+
+
 	// check command count
 	return true;
 }
