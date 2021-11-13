@@ -1,5 +1,6 @@
 #include "CommandManager.h"
 #include <iostream>
+#include <vector>
 
 int main(int argc, char** argv)
 {
@@ -13,8 +14,9 @@ int main(int argc, char** argv)
 	bot.on_ready([&bot, &commandManager](const dpp::ready_t& event) {
 		bot.log(dpp::ll_info, "Logged in as " + bot.me.username);
 
-		dpp::slashcommand newCommand;
+		std::vector<dpp::slashcommand> commands;
 
+		dpp::slashcommand newCommand;
 		newCommand.set_name("blep")
 			.set_description("Send a random adorable animal photo")
 			.set_application_id(bot.me.id)
@@ -29,6 +31,12 @@ int main(int argc, char** argv)
 		newCommand2.set_name("test")
 			.set_description("Test dpp")
 			.set_application_id(bot.me.id);
+
+		dpp::slashcommand newCommand3;
+		newCommand3.set_name("youtube")
+			.set_description("Youtube")
+			.set_application_id(bot.me.id);
+
 
 		bot.global_command_create(newCommand);
 		bot.global_command_create(newCommand2);
