@@ -18,7 +18,7 @@ public:
 	~CommandManager() {}
 
 	std::map<CommandEnums, dpp::slashcommand> GetCommandMap() { return commandMap; }
-	std::map<CommandEnums, std::function<void(dpp::interaction_create_t&)>> GetInteractionMap() { return interactionMap; }
+	std::map<CommandEnums, std::function<void(const dpp::interaction_create_t&)>> GetInteractionMap() { return interactionMap; }
 	std::unordered_map<std::string, CommandEnums> CommandToEnum() { return commandToEnum; }
 	bool Init();
 
@@ -38,6 +38,6 @@ private:
 	};
 
 	std::map<CommandEnums, dpp::slashcommand> commandMap;
-	std::map<CommandEnums, std::function<void(dpp::interaction_create_t&)>> interactionMap;
+	std::map<CommandEnums, std::function<void(const dpp::interaction_create_t&)>> interactionMap;
 };
 

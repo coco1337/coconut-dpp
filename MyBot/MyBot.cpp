@@ -89,11 +89,10 @@ int main(int argc, char** argv)
 			else if (cmd_data.name == "test") {
 				event.reply(dpp::ir_channel_message_with_source, fmt::format("test"));
 			}
-		}
-		else {
-			dpp::command_interaction cmd_data = std::get<dpp::command_interaction>(event.command.data);
-			if (commandManager->CommandToEnum().find(cmd_data.name) != commandManager->CommandToEnum().end()) {
-				commandManager->GetInteractionMap()[commandManager->CommandToEnum()[cmd_data.name]](event);
+			else {
+				dpp::command_interaction cmd_data = std::get<dpp::command_interaction>(event.command.data);
+				auto comm = commandManager->CommandToEnum().find(cmd_data.name)->second;
+				commandManager->GetInteractionMap()[comm](event);				
 			}
 		}
 		});

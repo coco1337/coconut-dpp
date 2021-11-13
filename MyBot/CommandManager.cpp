@@ -33,11 +33,11 @@ bool CommandManager::InitCommands() {
 }
 
 bool CommandManager::InitInteractions() {
-	interactionMap.emplace(CommandEnums::BLEP, [](dpp::interaction_create_t& evt) {
+	interactionMap.emplace(CommandEnums::BLEP, [](const dpp::interaction_create_t& evt) {
 		evt.reply(dpp::ir_channel_message_with_source, fmt::format("this is blep"));
 		});
 
-	interactionMap.emplace(CommandEnums::TEST, [](dpp::interaction_create_t& evt) {
+	interactionMap.emplace(CommandEnums::TEST, [](const dpp::interaction_create_t& evt) {
 		evt.reply(dpp::ir_channel_message_with_source, fmt::format("this is test"));
 		});
 
