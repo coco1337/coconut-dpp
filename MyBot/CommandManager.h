@@ -9,6 +9,7 @@
 enum class CommandEnums {
 	BLEP,
 	TEST,
+	TEST2,
 };
 
 class CommandManager
@@ -29,12 +30,14 @@ private:
 private:
 	std::unordered_map<CommandEnums, std::string> enumToCommand{
 		{CommandEnums::BLEP, "blepp"},
-		{CommandEnums::TEST, "testt"}
+		{CommandEnums::TEST, "testt"},
+		{CommandEnums::TEST2, "test2"}
 	};
 
 	std::unordered_map<std::string, CommandEnums> commandToEnum{
 		{"blepp", CommandEnums::BLEP},
-		{"testt", CommandEnums::TEST}
+		{"testt", CommandEnums::TEST},
+		{"test2", CommandEnums::TEST2}
 	};
 
 	std::map<CommandEnums, dpp::slashcommand> commandMap;

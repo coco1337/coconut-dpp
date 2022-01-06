@@ -41,7 +41,9 @@ bool CommandManager::InitInteractions() {
 		evt.reply(dpp::ir_channel_message_with_source, fmt::format("this is test"));
 		});
 
-
+	interactionMap.emplace(CommandEnums::TEST2, [](const dpp::interaction_create_t& evt) {
+		evt.reply(dpp::ir_channel_message_with_source, fmt::format("test2"));
+		});
 	// check command count
 	return true;
 }
